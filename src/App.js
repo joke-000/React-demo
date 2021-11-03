@@ -1,5 +1,50 @@
-import React, {Component, useState, useEffect } from "react";
+import React, {Component, useState} from "react";
 import './App.css';
+
+//In deze App component een aantal voorbeelden van React componenten. 
+//De componenten staan ook in dit bestand. 
+//Niet gebruikelijk maar wel fijner voor het overzicht. 
+//De functies in de App Component worden meegegeven/gebruikt door sommige van deze voorbeeld components.
+
+function App() {
+
+  //voor conditionalComponent
+  function conditionVoorbeeld (){
+    var thisDay = new Date();
+    if ( thisDay.getDay() == 3 ){
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  //voor CallbackComponent
+  function callbackVoorbeeld(){
+     alert("Callback");
+  }
+
+  //CallbackMetArgumentComponent
+  function callbackMetArgumenten(event){
+    alert("Callback met argumenten! Input value is: "+ event.target.value)
+  }
+
+
+  return (
+    <div className="App ComponentContainer">
+      <h3> AppComponent, gewoon naar beneden scrollen</h3>
+      <SimpelFunctieComponent simpelProp="Deze string is doorgegeven als prop" />
+      <SimpelClassComponent simpelProp="Deze string is doorgegeven als prop" />
+      <MinderSimpelClassComponent simpelProp="Deze string is doorgegeven als prop" />
+      <InterActiefClassComponent simpelProp="Deze string is doorgegeven als prop" />
+      <InterActiefFunctieComponent />
+      <ListClassComponent />
+      <CallbackComponent callBackProp={callbackVoorbeeld} />
+      <CallbackMetArgumentComponent callBackProp={(event) => callbackMetArgumenten(event)} />
+      <ConditionalComponent conditionalProp = {conditionVoorbeeld()}/>
+    </div>
+  );
+}
+
 
 //Simpel class component met een prop
 class SimpelClassComponent extends Component {
@@ -96,7 +141,7 @@ function InterActiefFunctieComponent() {
   );
 }
 
-//Lijstje uitprinten in een component
+//Component die een lijst uitprint
 class ListClassComponent extends Component {
   constructor() {
     super();
@@ -160,32 +205,33 @@ class CallbackMetArgumentComponent extends Component {
   }
 }
 
+//Component die verschillende dingen kan renderen, 
+//op basis van een bepaalde conditie
 
-function App() {
+class ConditionalComponent extends Component {
+  constructor(props) {
+    super(props);
+    }
+    render() {
+      if (this.props.conditionalProp == true )
+      {
+        return (
+                <div className="ComponentContainer">
+                  <h3> Conditioneel component: Vandaag is het woensdag</h3>
+                </div>
+        ) 
+      }
+      else {
+        return (
+                <div className="ComponentContainer">
+                  <h3> Conditioneel component: Vandaag is het geen woensdag </h3>
+                </div>
+          ) 
+      }   
+    }
 
-  function callbackVoorbeeld(){
-     alert("Callback");
-  }
-
-  function callbackMetArgumenten(event){
-    alert("Callback met argumenten! Input value is: "+ event.target.value)
-  }
-
-
-  return (
-    <div className="App ComponentContainer">
-      <h3> AppComponent, gewoon naar beneden scrollen</h3>
-      <SimpelFunctieComponent simpelProp="Deze string is doorgegeven als prop" />
-      <SimpelClassComponent simpelProp="Deze string is doorgegeven als prop" />
-      <MinderSimpelClassComponent simpelProp="Deze string is doorgegeven als prop" />
-      <InterActiefClassComponent simpelProp="Deze string is doorgegeven als prop" />
-      <InterActiefFunctieComponent />
-      <ListClassComponent />
-      <CallbackComponent callBackProp={callbackVoorbeeld} />
-      <CallbackMetArgumentComponent callBackProp={(event) => callbackMetArgumenten(event)} />
-
-    </div>
-  );
 }
+
+
 
 export default App;
