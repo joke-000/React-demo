@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ComponentContainer {
+  margin: 1em;
+  border-style: solid;
+  border-radius: 5%;
+  border-color:#d9d9d9;
+   
+}
