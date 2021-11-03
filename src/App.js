@@ -127,11 +127,10 @@ class ListClassComponent extends Component {
 }
 
 
-//Dit component 
+//Component met simpele callback 
 class CallbackComponent extends Component {
   constructor(props) {
   super(props);
-   this.state = { myInteractiveStateVar: "Dit is een interactieve state var" };  
   }
   render() {
     return (
@@ -143,11 +142,33 @@ class CallbackComponent extends Component {
   }
 }
 
+//Component met callback waarin een argument meegegeven wordt. 
+class CallbackMetArgumentComponent extends Component {
+  constructor(props) {
+  super(props);
+  }
+  render() {
+    return (
+      <div className="ComponentContainer">
+        <h3> Callback met argumenten</h3>
+        <input 
+          value = {""}
+          onChange={(event) => this.props.callBackProp(event)}
+          /> 
+      </div>
+    ) 
+  }
+}
+
 
 function App() {
 
   function callbackVoorbeeld(){
      alert("Callback");
+  }
+
+  function callbackMetArgumenten(event){
+    alert("Callback met argumenten! Input value is: "+ event.target.value)
   }
 
 
@@ -161,6 +182,8 @@ function App() {
       <InterActiefFunctieComponent />
       <ListClassComponent />
       <CallbackComponent callBackProp={callbackVoorbeeld} />
+      <CallbackMetArgumentComponent callBackProp={(event) => callbackMetArgumenten(event)} />
+
     </div>
   );
 }
