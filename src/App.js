@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {Component, useState, useEffect} from "react";
 import './App.css';
 
 //In deze App component een aantal voorbeelden van React componenten. 
@@ -11,7 +11,7 @@ function App() {
   //voor conditionalComponent
   function conditionVoorbeeld (){
     var thisDay = new Date();
-    if ( thisDay.getDay() == 3 ){
+    if ( thisDay.getDay() === 3 ){
         return true;
     } else {
         return false;
@@ -41,6 +41,8 @@ function App() {
       <CallbackComponent callBackProp={callbackVoorbeeld} />
       <CallbackMetArgumentComponent callBackProp={(event) => callbackMetArgumenten(event)} />
       <ConditionalComponent conditionalProp = {conditionVoorbeeld()}/>
+      <DataFetchClassComponent />
+      <DataFetchFunctionComponent />
     </div>
   );
 }
@@ -125,9 +127,10 @@ class InterActiefClassComponent extends Component {
 function InterActiefFunctieComponent() {
   const [myInteractiveVar, setMyInteractiveVar] = useState("Dit is een interactieve var");
 
-   function handleChange(event){
+  function handleChange(event){
      setMyInteractiveVar(event.target.value);
   }
+
   return (
       <div className="ComponentContainer">
           <h3> Simpel Functie Component</h3>
@@ -171,12 +174,9 @@ class ListClassComponent extends Component {
   }
 }
 
-
 //Component met simpele callback 
 class CallbackComponent extends Component {
-  constructor(props) {
-  super(props);
-  }
+ 
   render() {
     return (
       <div className="ComponentContainer">
@@ -189,9 +189,6 @@ class CallbackComponent extends Component {
 
 //Component met callback waarin een argument meegegeven wordt. 
 class CallbackMetArgumentComponent extends Component {
-  constructor(props) {
-  super(props);
-  }
   render() {
     return (
       <div className="ComponentContainer">
@@ -207,13 +204,9 @@ class CallbackMetArgumentComponent extends Component {
 
 //Component die verschillende dingen kan renderen, 
 //op basis van een bepaalde conditie
-
 class ConditionalComponent extends Component {
-  constructor(props) {
-    super(props);
-    }
     render() {
-      if (this.props.conditionalProp == true )
+      if (this.props.conditionalProp === true )
       {
         return (
                 <div className="ComponentContainer">
@@ -229,9 +222,83 @@ class ConditionalComponent extends Component {
           ) 
       }   
     }
-
 }
 
+//Class component die een lijst van een externe API haalt.
+//Dat is de JSON placeholder api. Deze is speciaal bedoeld om dit soort dingen te testen
+//https://jsonplaceholder.typicode.com/
+//Je kunt de data van de JSON placeholder API ook in je browser bekijken: 
+//ga bijvoorbeeld maar eens naar https://jsonplaceholder.typicode.com/users
+
+class DataFetchClassComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { myFetchedList: []};  
+    
+  }
+
+  //componentDidMount is een speciaal soort syntax van React. 
+  //Hierin kun je aangeven wat er gebeuren moet zodra het component geladen is. 
+  //In dit geval geven we aan dat de onderstaande functie FetchData uitgevoerd moet worden. 
+  //Resultaat: als het component geladen is, wordt FetchData meteen daarna aangeroepen.
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  
+  fetchData () {
+    const url = `https://jsonplaceholder.typicode.com/users`;
+    fetch(url)
+        .then((result) => result.json())
+        .then((result) => {
+            this.setState({      
+              myFetchedList: result    
+            });
+        });
+  }
+
+  render() {
+    return (
+      <div className="ComponentContainer">
+          <h3> Class Component voor data fetchen</h3>
+          <ul>{ this.state.myFetchedList.map((item) => 
+              <li key={item.id}>{item.name}</li>
+            )}
+          </ul> 
+      </div>
+    ) 
+  }
+}
+
+//Function component die lijst van externe backend binnen haalt
+function DataFetchFunctionComponent() {
+  const [ myFetchedList, setMyFetchedList] = useState([]);
+  
+  useEffect(() => {
+    fetchData();
+  },[]);
+
+  function fetchData(){
+    const url = `https://jsonplaceholder.typicode.com/users`;
+    fetch(url)
+        .then((result) => result.json())
+        .then((result) => {
+            setMyFetchedList(result);
+        });
+
+  }
+  return (
+      <div className="ComponentContainer">
+          <h3>Functie Component voor data fetchen</h3>
+          
+          <ul>{ myFetchedList.map((item) => 
+              <li key={item.id}>{item.name}</li>
+            )}
+          </ul> 
+          
+      </div>
+  );
+}
 
 
 export default App;
