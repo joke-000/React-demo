@@ -1,14 +1,15 @@
 import React, {Component, useState, useEffect} from "react";
 import './App.css';
 
-//In deze App component een aantal voorbeelden van React componenten. 
-//De componenten staan ook in dit bestand. 
-//Niet gebruikelijk maar wel fijner voor het overzicht. 
-//De functies in de App Component worden meegegeven/gebruikt door sommige van deze voorbeeld components.
+// In deze App component een aantal voorbeelden van React componenten. 
+// De componenten staan ook in dit bestand. 
+// Niet gebruikelijk maar wel fijner voor het overzicht. 
+// De functies in de App Component worden meegegeven/gebruikt door sommige van deze voorbeeld components.
+
 
 function App() {
 
-  //voor conditionalComponent
+  // voor conditionalComponent
   function conditionVoorbeeld (){
     var thisDay = new Date();
     if ( thisDay.getDay() === 3 ){
@@ -18,12 +19,12 @@ function App() {
     }
   }
 
-  //voor CallbackComponent
+  // voor CallbackComponent
   function callbackVoorbeeld(){
      alert("Callback");
   }
 
-  //CallbackMetArgumentComponent
+  // CallbackMetArgumentComponent
   function callbackMetArgumenten(event){
     alert("Callback met argumenten! Input value is: "+ event.target.value)
   }
@@ -48,7 +49,7 @@ function App() {
 }
 
 
-//Simpel class component met een prop
+// Simpel class component met een prop
 class SimpelClassComponent extends Component {
   render() {
     return (
@@ -60,7 +61,7 @@ class SimpelClassComponent extends Component {
   }
 }
 
-//Hetzelfde component, maar dan als functie component
+// Hetzelfde component, maar dan als functie component
 function SimpelFunctieComponent(props) {
   return (
       <div className="ComponentContainer">
@@ -70,7 +71,7 @@ function SimpelFunctieComponent(props) {
   );
 }
 
-//Class component met props en een eigen state var
+// Class component met props en een eigen state var
 class MinderSimpelClassComponent extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +90,7 @@ class MinderSimpelClassComponent extends Component {
 }
 
 
-//Class component waarbij je de state var kunt veranderen
+// Class component waarbij je de state var kunt veranderen
 class InterActiefClassComponent extends Component {
   constructor(props) {
     super(props);
@@ -120,13 +121,29 @@ class InterActiefClassComponent extends Component {
 }
 
 
-//Functie component waarin je ook een state var kan veranderen. 
-//Dus net als het component hierboven. 
-//Met usestate kun je ook in een class component een interne state bijhouden en veranderen. 
-//De syntax is iets anders, maar het gedrag komt op hetzelfde neer. 
+// Functie component waarin je ook een state var kan veranderen. 
+// Dus net als het component hierboven. 
+// Functie components kunnen net als class components een interne state in een variabele bijhouden. 
+// Maar de syntax die je daarvoor gebruikt is wel iets anders. 
 function InterActiefFunctieComponent() {
+
+  // Dit is de syntax waarmee de component versie van de internal state variable gezet wordt. 
+  
+  // In deze regel gebeuren 3 dingen:
+
+  // A: de interne state variable wordt gedeclareerd: myInteractiveVar
+
+  // B: er wordt een methode geleverd waarmee je deze variabele kunt veranderen. 
+  // Hier hoef je zelf geen code voor te schrijven. 
+  // Je geeft op deze plek een keyword mee (setMyInteractiveVar of setMyWhatever). 
+  // En vervolgens kun je met dat keyword je variabele veranderen. 
+
+  // C: de variabele krijgt een initiële waarde mee "Dit is een interactieve var"
   const [myInteractiveVar, setMyInteractiveVar] = useState("Dit is een interactieve var");
 
+
+  // Hier wordt het eerder gedeclareerde keyword setMyInteractiveVar gebruikt om de waarde van myInteractiveVar te veranderen. 
+  // De waarde van myInteractiveVar wordt overschreven met de waarde van event.target.value
   function handleChange(event){
      setMyInteractiveVar(event.target.value);
   }
@@ -144,7 +161,7 @@ function InterActiefFunctieComponent() {
   );
 }
 
-//Component die een lijst uitprint
+// Component die een lijst uitprint
 class ListClassComponent extends Component {
   constructor() {
     super();
@@ -174,7 +191,7 @@ class ListClassComponent extends Component {
   }
 }
 
-//Component met simpele callback 
+// Component met simpele callback 
 class CallbackComponent extends Component {
  
   render() {
@@ -187,7 +204,7 @@ class CallbackComponent extends Component {
   }
 }
 
-//Component met callback waarin een argument meegegeven wordt. 
+// Component met callback waarin een argument meegegeven wordt. 
 class CallbackMetArgumentComponent extends Component {
   render() {
     return (
@@ -202,8 +219,8 @@ class CallbackMetArgumentComponent extends Component {
   }
 }
 
-//Component die verschillende dingen kan renderen, 
-//op basis van een bepaalde conditie
+// Component die verschillende dingen kan renderen, 
+// op basis van een bepaalde conditie
 class ConditionalComponent extends Component {
     render() {
       if (this.props.conditionalProp === true )
@@ -224,11 +241,12 @@ class ConditionalComponent extends Component {
     }
 }
 
-//Class component die een lijst van een externe API haalt.
-//Dat is de JSON placeholder api. Deze is speciaal bedoeld om dit soort dingen te testen
-//https://jsonplaceholder.typicode.com/
-//Je kunt de data van de JSON placeholder API ook in je browser bekijken: 
-//ga bijvoorbeeld maar eens naar https://jsonplaceholder.typicode.com/users
+
+// Class component die een lijst van een externe API haalt.
+// Dat is de JSON placeholder api. Deze is speciaal bedoeld om dit soort dingen te testen
+// https://jsonplaceholder.typicode.com/
+// Je kunt de data van de JSON placeholder API ook in je browser bekijken: 
+// ga bijvoorbeeld maar eens naar https://jsonplaceholder.typicode.com/users
 
 class DataFetchClassComponent extends Component {
   constructor(props) {
@@ -237,19 +255,34 @@ class DataFetchClassComponent extends Component {
     
   }
 
-  //componentDidMount is een speciaal soort syntax van React. 
-  //Hierin kun je aangeven wat er gebeuren moet zodra het component geladen is. 
-  //In dit geval geven we aan dat de onderstaande functie FetchData uitgevoerd moet worden. 
-  //Resultaat: als het component geladen is, wordt FetchData meteen daarna aangeroepen.
+  // componentDidMount is een speciaal soort syntax van React. 
+  // Hierin kun je aangeven wat er gebeuren moet zodra het component geladen is. 
+  // In dit geval geven we aan dat de onderstaande functie FetchData uitgevoerd moet worden. 
+  // Resultaat: het component wordt geladen en haalt meteen daarna de data op. 
+  // Daarna is het klaar. De data wordt alleen opnieuw opgehaald als het component opnieuw geladen wordt. 
+  // (dus met een refresh).
   componentDidMount() {
     this.fetchData();
   }
 
-  
+  // Deze functie haalt daadwerkelijk de data op van de JSON Placeholder API. 
   fetchData () {
     const url = `https://jsonplaceholder.typicode.com/users`;
+    
+    // Fetch is een Javascript commando. Je geeft het een url mee als argument. 
+    // Fetch haalt de informatie/data die op die url te vinden via het internet voor je op. 
+    // Er zijn ook andere manieren/libraries om data op te halen (bijvoorbeeld Axios) 
+    // maar dit is even het meest simpele voorbeeld. 
     fetch(url)
+    
+        // Het sleutelwoord ‘then’ betekent dat er wordt ‘afgewacht’ tot het resultaat terug is. 
+        // Pas daarna wordt de code tussen de haakjes uitgevoerd. 
+        // Dat resultaat is niet meteen terug, omdat het van het internet moet komen. 
+
+        // Het resultaat wordt eerst omgezet naar json formaat, zodat onze code er iets mee kan
         .then((result) => result.json())
+
+        // Het resultaat wordt met setState in de state variable myFetchedList gezet. 
         .then((result) => {
             this.setState({      
               myFetchedList: result    
@@ -270,14 +303,21 @@ class DataFetchClassComponent extends Component {
   }
 }
 
-//Function component die lijst van externe backend binnen haalt
+// Function component die lijst van externe backend binnen haalt
+// Gebeurt precies hetzelfde, maar dan met de syntax van function components 
 function DataFetchFunctionComponent() {
   const [ myFetchedList, setMyFetchedList] = useState([]);
   
+   
+  // useEffect doet ongeveer hetzelfde als componentDidMount: 
+  // zorgen dat de data opgehaald wordt op het moment dat de component geladen is. 
+  // Het echte verhaal ligt wat genuanceerder, maar dat is voor nu nog niet relevant. 
+  // Blokhaakje aan het eind is wel belangrijk, die zorgt ervoor dat de data alleen bij het begin wordt opgehaald. 
   useEffect(() => {
     fetchData();
   },[]);
 
+  // precies hetzelfde als hierboven, maar dan dus met de setmethode van function components
   function fetchData(){
     const url = `https://jsonplaceholder.typicode.com/users`;
     fetch(url)
@@ -299,6 +339,7 @@ function DataFetchFunctionComponent() {
       </div>
   );
 }
+
 
 
 export default App;
