@@ -353,10 +353,14 @@ function FunctionsInJSXComponent() {
       </ul> 
     )
   }
+
+
   function mySecondFunction(param){
     param = param + param;
     return param
   }
+
+  
   return (
       <div className="ComponentContainer">
           <h3>Functie met functies in je JSX</h3>
