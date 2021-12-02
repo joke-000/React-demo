@@ -342,7 +342,7 @@ function DataFetchFunctionComponent() {
 }
 
 function FunctionsInJSXComponent() {
-  const [ myList, setMyList] = useState([1,2,3]);
+  const myList = [1,2,3];
  
   
   function myFirstFunction(){
@@ -360,7 +360,7 @@ function FunctionsInJSXComponent() {
     return param
   }
 
-  
+
   return (
       <div className="ComponentContainer">
           <h3>Functie met functies in je JSX</h3>
