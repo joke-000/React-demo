@@ -44,6 +44,7 @@ function App() {
       <ConditionalComponent conditionalProp = {conditionVoorbeeld()}/>
       <DataFetchClassComponent />
       <DataFetchFunctionComponent />
+      <FunctionsInJSXComponent />
     </div>
   );
 }
@@ -339,6 +340,41 @@ function DataFetchFunctionComponent() {
       </div>
   );
 }
+
+function FunctionsInJSXComponent() {
+  const [ myList, setMyList] = useState([1,2,3]);
+ 
+  
+  function myFirstFunction(){
+    return (
+      <ul>{ myList.map((item, index) => 
+        <li key={index}>{item}</li>
+      )}
+      </ul> 
+    )
+  }
+  function mySecondFunction(param){
+    param = param + param;
+    return param
+  }
+  return (
+      <div className="ComponentContainer">
+          <h3>Functie met functies in je JSX</h3>
+          
+         <div>Hieronder een JSX functie die een lijst returned
+           {myFirstFunction()}
+          </div>
+
+          <div>Hieronder een JSX map waarin iedere keer een functie wordt aangeroepen
+            <ul>{ myList.map((item, index) => 
+              <li key={index}>{mySecondFunction(item)}</li>
+              )}
+            </ul>
+          </div>
+      </div>
+  );
+}
+
 
 
 
